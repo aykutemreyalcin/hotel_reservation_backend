@@ -1,0 +1,15 @@
+meta {
+  name: hello
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/hello
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
