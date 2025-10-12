@@ -1,22 +1,21 @@
 meta {
-  name: login
+  name: register
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
-  url: {{url}}/auth/login
+  url: {{url}}/auth/register
   body: json
   auth: inherit
 }
 
 body:json {
   {
-  //   "email":"aykut@gmail.com",
-  //   "password":"Aykut123"
-    
     "email":"customer@gmail.com",
-    "password":"Customer123"
+    "name":"customer",
+    "password":"Customer123",
+    "phone":"1234567890"
   }
 }
 

@@ -22,29 +22,30 @@ public class AuthService {
         this.userRepository = userRepository; this.encoder = encoder; this.jwt = jwt;
     }
 
-    public TokenResponse register(RegisterRequest r) {
-        if (userRepository.existsByEmail(r.email)) throw new IllegalArgumentException("Email already in use");
-        var u = new User();
-        u.setEmail(r.email.trim().toLowerCase());
-        u.setName(r.name);
-        u.setPasswordHash(encoder.encode(r.password));
-        u.setRole(UserRole.customer);
-        userRepository.save(u);
+    public TokenResponse register(RegisterRequest registerRequest) {
+        if (userRepository.existsByEmail(registerRequest.email)) throw new IllegalArgumentException("Email already in use");
+        var user = new User();
+        user.setEmail(registerRequest.email.trim().toLowerCase());
+        user.setName(registerRequest.name);
+        user.setPasswordHash(encoder.encode(registerRequest.password));
+        user.setRole(UserRole.customer);
+        user.setPhone(registerRequest.phone);
+        userRepository.save(user);
+        return tokenFor(user);
+    }
+
+    public TokenResponse login(LoginRequest loginRequest) {
+        var u = userRepository.findByEmail(loginRequest.email.trim().toLowerCase()).orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
+        if (!encoder.matches(loginRequest.password, u.getPasswordHash())) throw new IllegalArgumentException("Invalid credentials");
         return tokenFor(u);
     }
 
-    public TokenResponse login(LoginRequest r) {
-        var u = userRepository.findByEmail(r.email.trim().toLowerCase()).orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
-        if (!encoder.matches(r.password, u.getPasswordHash())) throw new IllegalArgumentException("Invalid credentials");
-        return tokenFor(u);
-    }
-
-    private TokenResponse tokenFor(User u) {
-        String token = jwt.create(u.getId().toString(), Map.of("role", u.getRole().name(), "email", u.getEmail()));
+    private TokenResponse tokenFor(User user) {
+        String token = jwt.create(user.getId().toString(), Map.of("role", user.getRole().name(), "email", user.getEmail()));
         var tr = new TokenResponse();
         tr.accessToken = token;
         tr.expiresInSec = 60L * 60L; // config ile uyumlu
-        tr.user = AuthMapper.toDto(u);
+        tr.user = AuthMapper.toDto(user);
         return tr;
     }
 }
