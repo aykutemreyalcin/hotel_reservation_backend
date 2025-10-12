@@ -1,0 +1,25 @@
+meta {
+  name: review-create
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{url}}/review
+  body: json
+  auth: bearer
+}
+
+body:json {
+  {
+    "hotelId": 1,
+    "reservationId": 2,
+    "rating": 4.5,
+    "title": "Good stay",
+    "comment": "Room was clean, staff friendly, breakfast average."
+  }
+}
+
+settings {
+  encodeUrl: true
+}

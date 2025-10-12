@@ -1,0 +1,28 @@
+meta {
+  name: hotel-register
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{url}}/hotel/register
+  body: json
+  auth: bearer
+}
+
+body:json {
+  {
+    "name": "New Test Hotel",
+    "description": "A new test hotel for integration.",
+    "city": "Warsaw",
+    "country": "Poland",
+    "address": "Test Street 123",
+    "lat": 52.23,
+    "lng": 21.01,
+    "petFriendly": true
+  }
+}
+
+settings {
+  encodeUrl: true
+}

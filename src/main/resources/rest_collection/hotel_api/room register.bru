@@ -1,0 +1,26 @@
+meta {
+  name: room-create
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{url}}/hotel/1/room
+  body: json
+  auth: bearer
+}
+
+body:json {
+  {
+    "name": "Test Suite",
+    "type": "suite",
+    "capacity": 3,
+    "pricePerNight": 450.00,
+    "currency": "PLN",
+    "freeCancellation": true
+  }
+}
+
+settings {
+  encodeUrl: true
+}

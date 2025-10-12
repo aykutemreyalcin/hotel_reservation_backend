@@ -1,0 +1,28 @@
+meta {
+  name: reservation-create
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{url}}/reservation
+  body: json
+  auth: bearer
+}
+
+body:json {
+  {
+    "hotelId": 1,
+    "roomId": 1,
+    "checkIn": "2025-10-20",
+    "checkOut": "2025-10-23",
+    "guests": 2,
+    "pets": 0,
+    "currency": "PLN",
+    "specialRequests": "High floor room if possible."
+  }
+}
+
+settings {
+  encodeUrl: true
+}

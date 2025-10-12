@@ -1,0 +1,14 @@
+meta {
+  name: reservation-upcoming
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{url}}/reservation/upcoming
+  auth: bearer
+}
+
+settings {
+  encodeUrl: true
+}

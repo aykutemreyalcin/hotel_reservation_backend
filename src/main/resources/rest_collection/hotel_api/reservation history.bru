@@ -1,0 +1,14 @@
+meta {
+  name: reservation-history
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{url}}/reservation/history
+  auth: bearer
+}
+
+settings {
+  encodeUrl: true
+}
