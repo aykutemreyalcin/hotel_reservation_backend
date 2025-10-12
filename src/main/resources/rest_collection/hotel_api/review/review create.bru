@@ -1,7 +1,7 @@
 meta {
   name: review-create
   type: http
-  seq: 9
+  seq: 3
 }
 
 post {
@@ -10,10 +10,14 @@ post {
   auth: bearer
 }
 
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJheWt1dCIsInN1YiI6IjIiLCJlbWFpbCI6ImN1c3RvbWVyQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc2MDI5Mjg4NCwiZXhwIjoxNzYwNTUyMDg0fQ.UrIvvvHRQFaBHKm3IHIp4u9IoQ3-S80egmizFezmKdU
+}
+
 body:json {
   {
     "hotelId": 1,
-    "reservationId": 2,
+    "reservationId": 1,
     "rating": 4.5,
     "title": "Good stay",
     "comment": "Room was clean, staff friendly, breakfast average."

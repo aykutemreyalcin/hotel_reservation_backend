@@ -1,0 +1,20 @@
+meta {
+  name: hotel-list
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{url}}/hotel
+  body: none
+  auth: inherit
+}
+
+params:query {
+  ~city: warsaw
+  ~petFriendly: false
+}
+
+settings {
+  encodeUrl: true
+}

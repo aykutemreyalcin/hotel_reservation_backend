@@ -34,9 +34,16 @@ public class HotelService {
                     .filter(p -> p != null)
                     .min(Comparator.naturalOrder())
                     .orElse(null);
+
             return new HotelListItemDto(
-                    h.getId(), h.getName(), h.getCity(), h.getCountry(),
-                    h.getPetFriendly(), h.getRatingAvg(), h.getRatingCount(), min
+                    h.getId(),
+                    h.getName(),
+                    h.getCity(),
+                    h.getCountry(),
+                    h.getPetFriendly(),
+                    h.getRatingAvg(),
+                    h.getRatingCount(),
+                    min
             );
         }).toList();
     }

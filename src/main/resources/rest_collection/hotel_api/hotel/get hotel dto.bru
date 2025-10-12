@@ -1,11 +1,12 @@
 meta {
-  name: hotel-list
+  name: hotel-detail
   type: http
-  seq: 1
+  seq: 3
 }
 
 get {
-  url: {{url}}/hotel
+  url: {{url}}/hotel/1
+  body: none
   auth: inherit
 }
 

@@ -1,4 +1,5 @@
 package com.example.demo.service;
+
 import com.example.demo.dto.request.LoginRequest;
 import com.example.demo.dto.request.RegisterRequest;
 import com.example.demo.dto.response.TokenResponse;
@@ -14,37 +15,49 @@ import java.util.Map;
 
 @Service
 public class AuthService {
+
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final JwtService jwt;
 
     public AuthService(UserRepository userRepository, PasswordEncoder encoder, JwtService jwt) {
-        this.userRepository = userRepository; this.encoder = encoder; this.jwt = jwt;
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+        this.jwt = jwt;
     }
 
-    public TokenResponse register(RegisterRequest registerRequest) {
-        if (userRepository.existsByEmail(registerRequest.email)) throw new IllegalArgumentException("Email already in use");
-        var user = new User();
-        user.setEmail(registerRequest.email.trim().toLowerCase());
-        user.setName(registerRequest.name);
-        user.setPasswordHash(encoder.encode(registerRequest.password));
-        user.setRole(UserRole.customer);
-        user.setPhone(registerRequest.phone);
-        userRepository.save(user);
-        return tokenFor(user);
+    public TokenResponse register(RegisterRequest r) {
+        userRepository.findByEmail(r.email).ifPresent(u -> {
+            throw new IllegalArgumentException("email_in_use");
+        });
+
+        var u = new User();
+        u.setName(r.name);
+        u.setEmail(r.email);
+        u.setPasswordHash(encoder.encode(r.password));
+        u.setRole(UserRole.customer);
+        userRepository.save(u);
+
+        return tokenFor(u);
     }
 
-    public TokenResponse login(LoginRequest loginRequest) {
-        var u = userRepository.findByEmail(loginRequest.email.trim().toLowerCase()).orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
-        if (!encoder.matches(loginRequest.password, u.getPasswordHash())) throw new IllegalArgumentException("Invalid credentials");
+    public TokenResponse login(LoginRequest r) {
+        var u = userRepository.findByEmail(r.email)
+                .orElseThrow(() -> new IllegalArgumentException("invalid_credentials"));
+        if (!encoder.matches(r.password, u.getPasswordHash())) {
+            throw new IllegalArgumentException("invalid_credentials");
+        }
         return tokenFor(u);
     }
 
     private TokenResponse tokenFor(User user) {
-        String token = jwt.create(user.getId().toString(), Map.of("role", user.getRole().name(), "email", user.getEmail()));
+        String token = jwt.create(user.getId().toString(), Map.of(
+                "role", user.getRole().name(),
+                "email", user.getEmail()
+        ));
         var tr = new TokenResponse();
         tr.accessToken = token;
-        tr.expiresInSec = 60L * 60L; // config ile uyumlu
+        tr.expiresInSec = 60L * 60L;
         tr.user = AuthMapper.toDto(user);
         return tr;
     }

@@ -1,7 +1,7 @@
 meta {
   name: reservation-create
   type: http
-  seq: 5
+  seq: 4
 }
 
 post {
@@ -10,10 +10,18 @@ post {
   auth: bearer
 }
 
+params:query {
+  : 
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJheWt1dCIsInN1YiI6IjIiLCJlbWFpbCI6ImN1c3RvbWVyQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc2MDI5Mjg4NCwiZXhwIjoxNzYwNTUyMDg0fQ.UrIvvvHRQFaBHKm3IHIp4u9IoQ3-S80egmizFezmKdU
+}
+
 body:json {
   {
     "hotelId": 1,
-    "roomId": 1,
+    "roomId": 19,
     "checkIn": "2025-10-20",
     "checkOut": "2025-10-23",
     "guests": 2,

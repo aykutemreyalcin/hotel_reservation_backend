@@ -1,0 +1,19 @@
+meta {
+  name: reservation-history
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{url}}/reservation/history
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJheWt1dCIsInN1YiI6IjIiLCJlbWFpbCI6ImN1c3RvbWVyQGdtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc2MDI5Mjg4NCwiZXhwIjoxNzYwNTUyMDg0fQ.UrIvvvHRQFaBHKm3IHIp4u9IoQ3-S80egmizFezmKdU
+}
+
+settings {
+  encodeUrl: true
+}

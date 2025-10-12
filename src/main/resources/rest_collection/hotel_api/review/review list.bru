@@ -1,0 +1,19 @@
+meta {
+  name: review-list
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{url}}/review/3
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: 
+}
+
+settings {
+  encodeUrl: true
+}
