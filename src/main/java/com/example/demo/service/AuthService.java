@@ -36,6 +36,7 @@ public class AuthService {
         u.setEmail(r.email);
         u.setPasswordHash(encoder.encode(r.password));
         u.setRole(UserRole.customer);
+        u.setPhone(r.phone);
         userRepository.save(u);
 
         return tokenFor(u);
